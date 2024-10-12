@@ -39,6 +39,7 @@ jobs:
         run: |
           cd ./src
           rm -rf main/resources/application.yml
+          mkdir -p test/resources
           echo "$APPLICATION_PROPERTIES" > main/resources/application.yml
           echo "$TEST_APPLICATION_PROPERTIES" > test/resources/application.yml
 
