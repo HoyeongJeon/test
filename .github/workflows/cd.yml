@@ -1,0 +1,27 @@
+name: Cnergy Backend CD
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ['Cnergy Backend CI']
+    types: [completed]
+    branches: [main]
+
+jobs:
+  deploy:
+    # workflow 완료 후 결과가 성공 일 때
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name : NCP 서버 접속
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.NCP_HOST }}
+          username: ${{ secrets.NCP_USERNAME }}
+          password: ${{ secrets.NCP_PASSWORD }}
+          port: ${{ secrets.NCP_PORT }}
+          script: |
+            export NCP_CONTAINER_REGISTRY=${{ secrets.NCP_CONTAINER_REGISTRY }}
+            export GITHUB_SHA=${{ github.sha }}
+            ./deploy.sh
