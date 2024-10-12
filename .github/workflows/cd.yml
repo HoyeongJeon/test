@@ -21,7 +21,7 @@ jobs:
           username: ${{ secrets.NCP_USERNAME }}
           password: ${{ secrets.NCP_PASSWORD }}
           port: ${{ secrets.NCP_PORT }}
-        run: |
-          export NCP_CONTAINER_REGISTRY=${{ secrets.NCP_CONTAINER_REGISTRY }}
-          export GITHUB_SHA=${{ github.sha }}
-          ./deploy.sh
+          script: |
+            export NCP_CONTAINER_REGISTRY=${{ secrets.NCP_CONTAINER_REGISTRY }}
+            export GITHUB_SHA=${{ github.sha }}
+            ./deploy.sh
