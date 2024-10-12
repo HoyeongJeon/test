@@ -1,13 +1,12 @@
 name: Cnergy Backend CD
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
 
 jobs:
-  deploy:
-    # workflow 완료 후 결과가 성공 일 때
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+  cd:
     runs-on: ubuntu-latest
 
     steps:
