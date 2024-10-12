@@ -19,7 +19,6 @@ jobs:
           port: ${{ secrets.NCP_PORT }}
           script: |
             sudo chmod +x ./deploy.sh
-            sudo docker rm -f $(docker ps -qa) || true
             export NCP_CONTAINER_REGISTRY=${{ secrets.NCP_CONTAINER_REGISTRY }}
             export GITHUB_SHA=${{ github.sha }}
             ./deploy.sh
