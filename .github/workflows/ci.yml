@@ -77,9 +77,13 @@ jobs:
           tags: ${{ secrets.NCP_CONTAINER_REGISTRY }}/cnergy-backend:${{ env.IMAGE_TAG }}
           platforms: linux/amd64,linux/arm64
 
-      - name: 아티팩트 저장
-        uses: actions/upload-artifact@v3
+      - name: NCP 접속 후 이미지 다운로드
+        if: success()
+        uses: appleboy/ssh-action@master
         with:
-          name: image_tag
-          path: image_tag.txt
-
+          host: ${{ secrets.NCP_HOST }}
+          username: ${{ secrets.NCP_USERNAME }}
+          password: ${{ secrets.NCP_PASSWORD }}
+          port: ${{ secrets.NCP_PORT }}
+          script: |
+            docker pull ${{ secrets.NCP_CONTAINER_REGISTRY }}/cnergy-backend:${{ env.IMAGE_TAG }}
