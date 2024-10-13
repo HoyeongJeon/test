@@ -61,7 +61,7 @@ jobs:
           password: ${{ secrets.NCP_SECRET_KEY }}
 
       - name: 도커 이미지 태그 생성
-        run : echo "IMAGE_TAG"=${{ github.ref_name }}-${{ github.run_number }}" > image_tag.txt
+        run : echo "IMAGE_TAG=${{ github.ref_name }}-${{ github.run_number }}" > image_tag.txt
 
       - name : 태그를 환경변수로 저장
         run: |
