@@ -11,13 +11,15 @@ jobs:
 
     steps:
       - name: 아티팩트 다운로드
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: image_tag
 
       - name : 태그 환경변수 저장
         id: set_tag
-        run: echo "IMAGE_TAG=$(cat image_tag.txt)" >> $GITHUB_ENV
+        run: |
+          IMAGE_TAG=$(cat image_tag.txt)
+          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
 
       - name : NCP 서버 접속
         uses: appleboy/ssh-action@master
@@ -28,6 +30,6 @@ jobs:
           port: ${{ secrets.NCP_PORT }}
           script: |
             sudo chmod +x ./deploy.sh
-            export NCP_CONTAINER_REGISTRY=${{ secrets.NCP_CONTAINER_REGISTRY }}
-            export IMAGE_TAG=$(cat image_tag.txt)
-            ./deploy.sh
+           export NCP_CONTAINER_REGISTRY=${{ secrets.NCP_CONTAINER_REGISTRY }}
+           export IMAGE_TAG=${{ env.IMAGE_TAG }}
+           ./deploy.sh
