@@ -19,5 +19,4 @@ jobs:
           script: |
             sudo chmod +x ./deploy.sh
             export NCP_CONTAINER_REGISTRY=${{ secrets.NCP_CONTAINER_REGISTRY }}
-            export IMAGE_TAG=${{ env.IMAGE_TAG }}
             ./deploy.sh
