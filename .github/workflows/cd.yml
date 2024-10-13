@@ -15,13 +15,13 @@ jobs:
         with:
           name: image_tag
 
-      - name : 태그 환경변수 저장
+      - name: 태그 환경변수 저장
         id: set_tag
         run: |
           IMAGE_TAG=$(cat image_tag.txt)
           echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
 
-      - name : NCP 서버 접속
+      - name: NCP 서버 접속
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.NCP_HOST }}
@@ -30,6 +30,6 @@ jobs:
           port: ${{ secrets.NCP_PORT }}
           script: |
             sudo chmod +x ./deploy.sh
-           export NCP_CONTAINER_REGISTRY=${{ secrets.NCP_CONTAINER_REGISTRY }}
-           export IMAGE_TAG=${{ env.IMAGE_TAG }}
-           ./deploy.sh
+            export NCP_CONTAINER_REGISTRY=${{ secrets.NCP_CONTAINER_REGISTRY }}
+            export IMAGE_TAG=${{ env.IMAGE_TAG }}
+            ./deploy.sh
